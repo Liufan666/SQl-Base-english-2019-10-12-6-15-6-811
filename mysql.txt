@@ -1,0 +1,60 @@
+create database if not exists student_examination_sys;
+USE student_examination_sys;
+
+create table student(
+id VARCHAR(10) primary key,
+name VARCHAR(20),
+age INT(2),
+sex VARCHAR(20) CHECK(SEX IN('male','female'))
+);
+
+INSERT INTO student 
+( id, name, age, sex )
+VALUES
+( '001', 'zhangsan', 18, 'male' );
+INSERT INTO student 
+( id, name, age, sex )
+VALUES
+( '002', 'lisi', 20, 'female' );
+
+create table subject(
+id VARCHAR(10) primary key,
+subject VARCHAR(20),
+teacher VARCHAR(20),
+description VARCHAR(100)
+);
+
+INSERT INTO subject 
+( id, subject, teacher, description )
+VALUES
+( '1001', 'Chinese', 'Mr.Wang', 'the exam is easy' );
+INSERT INTO subject 
+( id, subject, teacher, description )
+VALUES
+( '1002', 'math', 'Miss Liu', 'the exam is difficult' );
+
+create table score(
+id INT primary key,
+student_id VARCHAR(10),
+subject_id VARCHAR(10),
+score DOUBLE,
+foreign key (student_id) references student(id) on delete cascade on update cascade,
+foreign key (subject_id) references subject(id) on delete cascade on update cascade
+);
+
+INSERT INTO score 
+( id, student_id, subject_id, score )
+VALUES
+( 1, '001', '1001', 80 );
+INSERT INTO score 
+( id, student_id, subject_id, score )
+VALUES
+( 2, '002', '1002', 60 );
+INSERT INTO score 
+( id, student_id, subject_id, score )
+VALUES
+( 3, '001', '1001', 70 );
+INSERT INTO score 
+( id, student_id, subject_id, score )
+VALUES
+( 4, '002', '1002', 60.5 );
